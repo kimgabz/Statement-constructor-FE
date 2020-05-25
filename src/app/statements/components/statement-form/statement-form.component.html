@@ -1,0 +1,102 @@
+<mat-card>
+  <h3>{{ title }}}</h3>
+  {{ this.statementForm.value | json }}
+  <form
+    class="form-container"
+    [formGroup]="statementForm"
+    novalidate
+    (ngSubmit)="onSubmit()"
+  >
+    <mat-form-field color="accent">
+      <mat-label>Item</mat-label>
+      <input matInput formControlName="item" />
+      <mat-error
+        *ngIf="
+          statementForm.controls.item.invalid &&
+          statementForm.controls.item.touched
+        "
+      >
+        item is required
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field color="accent">
+      <!-- <input matInput placeholder="Date" type="date" /> -->
+      <mat-label>Choose a date</mat-label>
+      <input matInput [matDatepicker]="date" formControlName="date" />
+      <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
+      <mat-datepicker #date></mat-datepicker>
+      <mat-error
+        *ngIf="
+          statementForm.controls.date.invalid &&
+          statementForm.controls.date.touched
+        "
+      >
+        date is required
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field color="accent">
+      <!-- <mat-label>Due</mat-label>
+      <input matInput type="date" /> -->
+      <mat-label>Choose a due date</mat-label>
+      <input matInput [matDatepicker]="due" formControlName="due" />
+      <mat-datepicker-toggle matSuffix [for]="due"></mat-datepicker-toggle>
+      <mat-datepicker #due></mat-datepicker>
+      <mat-error
+        *ngIf="
+          statementForm.controls.due.invalid &&
+          statementForm.controls.due.touched
+        "
+      >
+        due date is required
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field color="accent">
+      <mat-label>Qty</mat-label>
+      <input matInput type="number" formControlName="qty" />
+      <mat-error
+        *ngIf="
+          statementForm.controls.qty.invalid &&
+          statementForm.controls.qty.touched
+        "
+      >
+        quantity is required
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field color="accent">
+      <mat-label>Tax</mat-label>
+      <input matInput type="number" formControlName="tax" />
+    </mat-form-field>
+    <mat-form-field color="accent">
+      <mat-label>Rate</mat-label>
+      <input matInput type="number" formControlName="rate" />
+    </mat-form-field>
+    <h4>Select Client</h4>
+    <mat-form-field>
+      <mat-label>Select client</mat-label>
+      <mat-select formControlName="client">
+        <mat-option *ngFor="let client of clients" [value]="client._id">
+          {{ client.firstName }} {{ client.lastName }}
+        </mat-option>
+        <mat-error
+          *ngIf="
+            statementForm.controls.client.invalid &&
+            statementForm.controls.client.touched
+          "
+        >
+          client is required</mat-error
+        >
+      </mat-select>
+    </mat-form-field>
+    <div>
+      <button
+        mat-raised-button
+        [disabled]="!statementForm.valid"
+        type="submit"
+        color="accent"
+      >
+        Save
+      </button>
+      <button mat-raised-button type="reset">Cancel</button>
+    </div>
+  </form>
+</mat-card>
